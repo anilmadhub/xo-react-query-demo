@@ -1,5 +1,6 @@
-import { Box, Link, Spinner, Stack } from '@chakra-ui/react'
+import { Box, Spinner, Stack } from '@chakra-ui/react'
 import { useIsFetching } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 
 export const Nav = () => {
   const isFetching = useIsFetching()
@@ -9,13 +10,13 @@ export const Nav = () => {
   return (
     <Stack direction='row' spacing='24px'>
       <Box h='40px'>
-        <Link href='/'>Songs(old)</Link>
+        <Link to='/'>Songs(old)</Link>
       </Box>
       <Box h='40px'>
-        <Link href='/songs'>Songs</Link>
+        <Link to='/songs'>Songs</Link>
       </Box>
       <Box h='40px'>
-        <Link href='/albums'>Albums</Link>
+        <Link to='/albums'>Albums</Link>
       </Box>
       {isFetching > 0 && (
         <Box h='40px'>

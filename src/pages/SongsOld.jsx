@@ -11,6 +11,7 @@ import {
 
 import { useEffect, useState } from 'react'
 import { fetchSongs } from '../api'
+import { Layout } from '../components/layout'
 
 export default function SongsOld () {
   const [songs, setSongs] = useState([])
@@ -53,7 +54,7 @@ export default function SongsOld () {
   }
 
   return (
-    <>
+    <Layout>
       <Button onClick={fetchSongsHandler} colorScheme='blue'>
         Refetch
       </Button>
@@ -87,6 +88,6 @@ export default function SongsOld () {
           </ListItem>
         ))}
       </List>
-    </>
+    </Layout>
   )
 }

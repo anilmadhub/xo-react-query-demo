@@ -10,6 +10,7 @@ import {
 
 import { useQuery } from '@tanstack/react-query'
 import { fetchSongs } from '../api'
+import { Layout } from '../components/layout'
 
 export default function Songs () {
   const { data, isLoading, error, refetch, isFetching } = useQuery({
@@ -29,7 +30,7 @@ export default function Songs () {
   }
 
   return (
-    <>
+    <Layout>
       <Button onClick={refetch}>
         {isFetching ? 'Fetching...' : 'Refetch Todos'}
       </Button>
@@ -45,6 +46,6 @@ export default function Songs () {
           </ListItem>
         ))}
       </List>
-    </>
+    </Layout>
   )
 }
