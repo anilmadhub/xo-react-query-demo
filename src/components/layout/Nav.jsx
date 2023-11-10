@@ -1,22 +1,46 @@
-import { Box, Spinner, Stack } from '@chakra-ui/react'
-import { useIsFetching } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
+import { Box, Button, Spinner, Stack, Text } from '@chakra-ui/react'
+import { useIsFetching, useQueryClient } from '@tanstack/react-query'
+import { NavLink } from 'react-router-dom'
 
 export const Nav = () => {
   const isFetching = useIsFetching()
+  const queryClient = useQueryClient()
+  const invalidateQueryHandler = () =>
+    queryClient.invalidateQueries({ queryKey: ['albums'] })
 
   // const isFetchingSongs = useIsFetching({ queryKey: ['songs'] })
+
+  const renderLink = (isActive, text) =>
+    isActive ? (
+      <Text color='green' as='b'>
+        {text}
+      </Text>
+    ) : (
+      text
+    )
 
   return (
     <Stack direction='row' spacing='24px'>
       <Box h='40px'>
-        <Link to='/'>Songs(old)</Link>
+        <NavLink to='/'>
+          {({ isActive }) => renderLink(isActive, 'Songs(old)')}
+        </NavLink>
       </Box>
       <Box h='40px'>
-        <Link to='/songs'>Songs</Link>
+        <NavLink to='/songs'>
+          {({ isActive }) => renderLink(isActive, 'Songs')}
+        </NavLink>
       </Box>
       <Box h='40px'>
-        <Link to='/albums'>Albums</Link>
+        <NavLink to='/albums'>
+          {({ isActive }) => renderLink(isActive, 'Albums')}
+        </NavLink>
+      </Box>
+
+      <Box h='40px'>
+        <Button variant='link' onClick={invalidateQueryHandler}>
+          Refetch albums
+        </Button>
       </Box>
       {isFetching > 0 && (
         <Box h='40px'>

@@ -1,22 +1,30 @@
 import { CheckIcon } from '@chakra-ui/icons'
 import {
-  Badge,
+  Box,
   Button,
   List,
   ListIcon,
   ListItem,
-  Spacer
+  Spacer,
+  Stack
 } from '@chakra-ui/react'
 
 import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 import { fetchSongs } from '../api'
 import { Layout } from '../components/layout'
 
 export default function Songs () {
-  const { data, isLoading, error, refetch, isFetching } = useQuery({
+  const {
+    data: songs,
+    isLoading,
+    error,
+    refetch,
+    isFetching
+  } = useQuery({
     queryKey: ['songs'],
     queryFn: fetchSongs,
-    select: res => res.data.filter(s => s.likes > 60000),
+    select: res => res.data,
     refetchOnWindowFocus: true
   })
 
@@ -36,13 +44,31 @@ export default function Songs () {
       </Button>
       <Spacer mt={5} />
       <List>
-        {data?.map(s => (
+        <ListItem>
+          <Stack direction='row'>
+            <Box>
+              <ListIcon as={CheckIcon} color='white' />
+            </Box>
+            <Box width={300}>
+              <strong>Song</strong>
+            </Box>
+            <Box width={100}>
+              <strong>Type</strong>
+            </Box>
+          </Stack>
+        </ListItem>
+        {songs.map(s => (
           <ListItem key={s.id}>
-            <ListIcon as={CheckIcon} color='green.500' />
-            {s.name} - {s.genre}
-            <Badge marginLeft={5} variant='outline' colorScheme='cyan'>
-              {s.likes}
-            </Badge>
+            <Stack direction='row'>
+              <Box>
+                <ListIcon as={CheckIcon} color='green.500' />
+              </Box>
+              <Box width={300}>{s.name}</Box>
+              <Box width={100}>{s.genre}</Box>
+              <Box>
+                <Link to={`/songs/${s.id}`}>More details</Link>
+              </Box>
+            </Stack>
           </ListItem>
         ))}
       </List>

@@ -1,22 +1,31 @@
-import { CheckIcon } from '@chakra-ui/icons'
+import { InfoOutlineIcon } from '@chakra-ui/icons'
 import {
-  Badge,
+  Box,
   Button,
   List,
   ListIcon,
   ListItem,
-  Spacer
+  Spacer,
+  Stack
 } from '@chakra-ui/react'
 
 import { useQuery } from '@tanstack/react-query'
-import { fetchSongs } from '../api'
+import { fetchAlbums } from '../api'
 import { Layout } from '../components/layout'
 
+import dayjs from 'dayjs'
+
 export default function Albums () {
-  const { data, isLoading, error, refetch, isFetching } = useQuery({
-    queryKey: ['songs'],
-    queryFn: fetchSongs,
-    select: res => res.data.filter(s => s.likes > 60000),
+  const {
+    data: albums,
+    isLoading,
+    error,
+    refetch,
+    isFetching
+  } = useQuery({
+    queryKey: ['albums'],
+    queryFn: fetchAlbums,
+    select: res => res.data,
     refetchOnWindowFocus: true
   })
 
@@ -36,13 +45,30 @@ export default function Albums () {
       </Button>
       <Spacer mt={5} />
       <List>
-        {data?.map(s => (
-          <ListItem key={s.id}>
-            <ListIcon as={CheckIcon} color='green.500' />
-            {s.name} - {s.genre}
-            <Badge marginLeft={5} variant='outline' colorScheme='cyan'>
-              {s.likes}
-            </Badge>
+        <ListItem>
+          <Stack direction='row'>
+            <Box>
+              <ListIcon as={InfoOutlineIcon} color='white' />
+            </Box>
+            <Box width={300}>
+              <strong>Albums</strong>
+            </Box>
+            <Box width={100}>
+              <strong>Date released</strong>
+            </Box>
+          </Stack>
+        </ListItem>
+        {albums.map(a => (
+          <ListItem key={a.id}>
+            <Stack direction='row'>
+              <Box>
+                <ListIcon as={InfoOutlineIcon} color='red.500' />
+              </Box>
+              <Box width={300}>{a.name}</Box>
+              <Box width={200}>
+                {dayjs(a.dateReleased).format('DD/MM/YYYY')}
+              </Box>
+            </Stack>
           </ListItem>
         ))}
       </List>

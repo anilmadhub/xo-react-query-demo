@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { fetchSongs } from '../api'
 import { Layout } from '../components/layout'
 
@@ -82,7 +83,7 @@ export default function SongsOld () {
               <Box width={300}>{s.name}</Box>
               <Box width={100}>{s.genre}</Box>
               <Box>
-                <Button variant='link'>More details</Button>
+                <Link to={`/songs/${s.id}`}>More details</Link>
               </Box>
             </Stack>
           </ListItem>

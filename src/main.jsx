@@ -8,6 +8,7 @@ import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Albums from './pages/Albums.jsx'
+import SongDetail from './pages/SongDetail.jsx'
 import Songs from './pages/Songs.jsx'
 import SongsOld from './pages/SongsOld.jsx'
 
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     element: <Songs />
   },
   {
+    path: '/songs/:id',
+    element: <SongDetail />
+  },
+  {
     path: '/albums',
     element: <Albums />
   }
@@ -32,7 +37,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ChakraProvider>
