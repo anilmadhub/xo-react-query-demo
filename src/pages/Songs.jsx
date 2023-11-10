@@ -20,16 +20,14 @@ export default function Songs () {
     isLoading,
     error,
     refetch,
-    isFetching
+    isRefetching
   } = useQuery({
     queryKey: ['songs'],
     queryFn: fetchSongs,
-    select: res => res.data,
-    refetchOnWindowFocus: true
+    select: res => res.data
   })
 
   if (error) {
-    console.log(error)
     return 'Something went wrong'
   }
 
@@ -39,8 +37,8 @@ export default function Songs () {
 
   return (
     <Layout>
-      <Button onClick={refetch}>
-        {isFetching ? 'Fetching...' : 'Refetch Todos'}
+      <Button onClick={refetch} colorScheme='green'>
+        {isRefetching ? 'Refetching...' : 'Refetch'}
       </Button>
       <Spacer mt={5} />
       <List>
