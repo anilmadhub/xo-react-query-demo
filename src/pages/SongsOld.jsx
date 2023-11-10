@@ -16,16 +16,16 @@ import { Layout } from '../components/layout'
 
 export default function SongsOld () {
   const [songs, setSongs] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
   // on click fetch songs again
   const fetchSongsHandler = () => {
-    setLoading(true)
+    setIsLoading(true)
     fetchSongs()
       .then(response => {
         setSongs(response.data)
-        setLoading(false)
+        setIsLoading(false)
       })
       .catch(e => {
         console.log(e)
@@ -38,7 +38,7 @@ export default function SongsOld () {
     fetchSongs()
       .then(response => {
         setSongs(response.data)
-        setLoading(false)
+        setIsLoading(false)
       })
       .catch(e => {
         console.log(e)
@@ -50,7 +50,7 @@ export default function SongsOld () {
     return 'Something went wrong'
   }
 
-  if (loading) {
+  if (isLoading) {
     return 'loading...'
   }
 
